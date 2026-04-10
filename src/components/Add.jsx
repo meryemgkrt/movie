@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { use, useContext, useState } from 'react'
+import ResultCart from './ResultCart';
+
 
 const Add = () => {
+    
     const [query, setQuery] = useState("")
     const [results, setResults] = useState([]);
 
@@ -11,7 +14,13 @@ const Add = () => {
 
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${e.target.value}&language=en-US&page=1&include_adult=false`)
             .then(res => res.json())
-            .then(data => setResults(data.results));
+            .then(data => {
+                if(!data.error) {
+                    setResults(data.results);
+                }else{
+                    setResults([]);
+                }
+            });
     };
     return (
         <div className='add-page'>
@@ -23,6 +32,7 @@ const Add = () => {
                         <h2 className="">
                             İzlenecek film ve dizileri arayın ve ekleyin.Zevkinize göre yeni TV şovları keşfedin.
                         </h2>
+                        
 
                     </div>
                     <div className="input-wrapper">
@@ -30,14 +40,16 @@ const Add = () => {
                         
 
                     </div>
-                    {results.map((movie)=>(
-                        <div key={movie.id}>
-                            <h1>{movie.title}</h1>
-                            <img
-                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />        
-                       <p>{movie.overview}</p>
-                        </div>
-                    ))}
+                   {results.length > 0 &&(
+                    <ul className="results">
+                        {results.map(meovie=>(
+                            <li className="" key={meovie.id}>
+                                <ResultCart movie={meovie}/>
+
+                            </li>
+                        ))}
+                    </ul>
+                   )}
                 </div>
             </div>
         </div>
