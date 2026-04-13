@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Header = ({}) => {
-
+const Header = () => {
     return (
         <header>
             <div className="container">
@@ -14,15 +13,13 @@ const Header = ({}) => {
                         <li className="nav-item">
                             <Link to="/watched" className="flex items-center gap-2">
                                 İzlenenler
-                                
                             </Link>
-
                         </li>
-                       <li>
+                        <li>
                             <Link to="/add" className="btn flex items-center gap-2">
-                            <i className="fas fa-plus text-white"></i>
+                                <i className="fas fa-plus text-white"></i>
                             </Link>
-                       </li>
+                        </li>
                     </ul>
                 </div>
             </div>

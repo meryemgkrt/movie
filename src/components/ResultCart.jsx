@@ -1,8 +1,10 @@
 import React, { useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState'
+import { useNavigate } from 'react-router-dom'
 
 const ResultCart = ({ movie }) => {
-    const { addMovieToWatchlist, removeMovieFromWatchlist } = useContext(GlobalContext)
+    const { addMovieToWatchlist, removeMovieFromWatchlist, addMovieToWatched } = useContext(GlobalContext)
+    const navigate = useNavigate()
 
     const overview = movie.overview
         ? movie.overview.slice(0, 120) + (movie.overview.length > 120 ? '...' : '')
@@ -11,8 +13,11 @@ const ResultCart = ({ movie }) => {
     const handleAddToWatchlist = () => {
         addMovieToWatchlist(movie)
     }
+
     const handleRemoveFromWatchlist = () => {
+        addMovieToWatched(movie)
         removeMovieFromWatchlist(movie.id)
+
     }
 
     return (
@@ -55,17 +60,28 @@ const ResultCart = ({ movie }) => {
                 </p>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 14 }}>
-                    <button onClick={handleAddToWatchlist} style={{ flex: 1, height: 34, background: '#111827', color: '#fff', border: 'none', borderRadius: 10, cursor: 'pointer', fontSize: 12, fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    <button
+                        onClick={handleAddToWatchlist}
+                        onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#111827' }}
+                        onMouseLeave={e => { e.currentTarget.style.background = '#111827'; e.currentTarget.style.color = '#fff' }}
+                        style={{ flex: 1, height: 34, background: '#111827', color: '#fff', border: '1px solid #111827', borderRadius: 10, cursor: 'pointer', fontSize: 12, fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, transition: 'all 0.2s' }}
+                    >
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                            <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
                         </svg>
-                        Add to Favorites
+                        Add to Watchlist
                     </button>
-                    <button onClick={handleRemoveFromWatchlist} style={{ flex: 1, height: 34, background: '#111827', color: '#fff', border: 'none', borderRadius: 10, cursor: 'pointer', fontSize: 12, fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+
+                    <button
+                        onClick={handleRemoveFromWatchlist}
+                        onMouseEnter={e => { e.currentTarget.style.background = '#ef4444'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#ef4444' }}
+                        onMouseLeave={e => { e.currentTarget.style.background = '#111827'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#111827' }}
+                        style={{ flex: 1, height: 34, background: '#111827', color: '#fff', border: '1px solid #111827', borderRadius: 10, cursor: 'pointer', fontSize: 12, fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, transition: 'all 0.2s' }}
+                    >
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                            <polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14H6L5 6" /><path d="M10 11v6M14 11v6" />
                         </svg>
-                        Remove from Favorites
+                        Remove
                     </button>
                 </div>
             </div>
